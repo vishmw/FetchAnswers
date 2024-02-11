@@ -1,0 +1,9 @@
+The users.json file has no data
+
+The brands.json file has multiple issues:
+
+the barcode is missing data in some cases
+cpg data field does not seem to fit into the data model, and seems to be a collection. But there is no meaningful information from this field
+
+Brandcode is not always present in all the rows in the JSON for brands
+

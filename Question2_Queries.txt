@@ -1,0 +1,75 @@
+Question 1
+
+Top 5 brands by receipts scanned for most recent month
+
+
+SELECT
+    B.name AS BrandName,
+    COUNT(*) AS SalesCount
+FROM
+    Brand B
+JOIN
+    receiptitem RI ON B.brandID = RI.brandID
+JOIN
+    receipts R ON RI.receiptID = R.receiptID
+WHERE
+    R.purchaseDate >= CURRENT_DATE - INTERVAL '1' MONTH
+GROUP BY
+    B.name
+ORDER BY
+    SalesCount DESC
+LIMIT 5;
+
+
+Question 2
+
+Compare top 5 brands for most 2 recent months:
+WITH RecentMonth AS (
+    SELECT
+        B.name AS BrandName,
+        COUNT(*) AS SalesCount
+    FROM
+        Brand B
+    JOIN
+        receiptitem RI ON B.brandID = RI.brandID
+    JOIN
+        receipts R ON RI.receiptID = R.receiptID
+    WHERE
+        R.dateScanned >= CURRENT_DATE - INTERVAL '1' MONTH
+    GROUP BY
+        B.name
+),
+PreviousMonth AS (
+    SELECT
+        B.name AS BrandName,
+        COUNT(*) AS SalesCount
+    FROM
+        Brand B
+    JOIN
+        receiptitem RI ON B.brandID = RI.brandID
+    JOIN
+        receipts R ON RI.receiptID = R.receiptID
+    WHERE
+        R.dateScanned >= CURRENT_DATE - INTERVAL '2' MONTH
+        AND R.dateScanned < CURRENT_DATE - INTERVAL '1' MONTH
+    GROUP BY
+        B.name
+)
+SELECT
+    RM.BrandName,
+    RM.SalesCount AS RecentMonthSales,
+    PM.SalesCount AS PreviousMonthSales,
+    CASE
+        WHEN RM.SalesCount > PM.SalesCount THEN 'Increased'
+        WHEN RM.SalesCount < PM.SalesCount THEN 'Decreased'
+        ELSE 'No Change'
+    END AS SalesComparison
+FROM
+    RecentMonth RM
+JOIN
+    PreviousMonth PM ON RM.BrandName = PM.BrandName
+ORDER BY
+    RM.SalesCount DESC
+LIMIT 5;
+
+

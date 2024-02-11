@@ -1,0 +1,30 @@
+What questions do you have about the data?
+
+The data seems to be raw data but has multiple issues. There is no clear definition or indication of what some of the fields in the JSON could mean(cfg). Some data is missing and some data is null or incorrect types.
+
+How did you discover the data quality issues?
+
+Some of the quality issues can be uncovered by just scanning the data, where its easy to find missing fields.
+
+Other issues are uncovered by importing the data into a SQL table or loading into python dataframes or a C# serializer to convert JSON data to a class.  Missing or incorrect data types will cause issues during the import or serialization.
+
+What do you need to know to resolve the data quality issues?
+
+The first goal is to understand the questions to be answered from a business perspective. Second step is to determine what data or combination of data will allow us to answer those questions. Third step is to determine, based on talks with data collection teams, how best to collect the data and what issues are to be expected. If there are errors, how can those errors be corrected, or if there is a mitigation effort that could help us answer the questions even wiht missing data.
+
+What other information would you need to help you optimize the data assets you're trying to create?
+
+a) I would need to understand the business needs that need to be answered using the data
+b) Privacy and data governance policies to be followed
+c) Scalability required
+d) Number of queries to be handled in a day, month, and simultaneaously(peak load)
+e) How are insights collected? Visualization of results from queries, and requirements to plot the data
+f) Data collection sources - how is the data collected and who to contact for errors in the data
+g) Future growth requirements 
+h) Data backup requirements and policies.
+
+
+What performance and scaling concerns do you anticipate in production and how do you plan to address them?
+
+Data concurrency, volume, query performance, deadlocks, scalability, fault tolerance(system availability), security, caching of data, monitoring and alerting, authentication and authorization of users to the data sets and query results.
+
